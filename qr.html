@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu QR</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      font-family: Arial, sans-serif;
+    }
+    #qrBox {
+      display: inline-block;
+      padding: 16px;
+      border-radius: 16px;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div id="qrBox"></div>
+
+  <script>
+    function buildMenuUrl() {
+      return new URL('menu.html', window.location.href).toString();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      new QRCode(document.getElementById('qrBox'), {
+        text: buildMenuUrl(),
+        width: 260,
+        height: 260,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    });
+  </script>
+</body>
+</html>

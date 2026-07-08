@@ -1,0 +1,10 @@
+ID,Category,Name,Description,Price,ImageURL,Veg,Available,Popular,ChefSpecial,PrepTime,Spice
+1,Coffee,Velvet Cappuccino,Silky espresso crowned with house foam.,250,https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80,Yes,Yes,Yes,Yes,8 min,Mild
+2,Coffee,Caramel Latte,Rich espresso with caramel sweetness.,280,https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&w=800&q=80,Yes,Yes,No,No,7 min,Mild
+3,Tea,Spiced Chai,Fragrant black tea simmered with spice.,220,https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80,Yes,Yes,Yes,No,6 min,Medium
+4,Mocktails,Citrus Sparkler,Fresh citrus with sparkling botanicals.,240,https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=800&q=80,Yes,Yes,No,Yes,5 min,Mild
+5,Pizza,Truffle Mushroom Pizza,Wood-fired crust and creamy truffle finish.,450,https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80,Yes,Yes,Yes,Yes,20 min,Medium
+6,Burger,Smoky BBQ Burger,Char-grilled patty with caramelized onions.,390,https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80,No,Yes,Yes,No,15 min,Medium
+7,Pasta,Sunset Tomato Pasta,Slow-simmered tomato sauce and basil.,360,https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80,Yes,Yes,No,No,16 min,Mild
+8,Sandwich,Herb Chicken Melt,Grilled chicken with roasted herbs.,320,https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80,No,Yes,No,Yes,12 min,Medium
+9,Desserts,Chocolate Éclair,Fluffy pastry with rich chocolate cream.,260,https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=800&q=80,Yes,Yes,Yes,Yes,10 min,Mild
