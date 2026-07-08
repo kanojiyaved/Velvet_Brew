@@ -3,7 +3,7 @@ const state = {
   categories: [],
   activeCategory: 'All',
   searchTerm: '',
-  filters: new Set(),
+  dietFilter: 'all',
 };
 
 const elements = {
@@ -24,16 +24,13 @@ function camelToTitle(value) {
 function getFilteredItems() {
   return state.items.filter((item) => {
     const matchesCategory = state.activeCategory === 'All' || item.Category === state.activeCategory;
-    const matchesSearch = `${item.Name} ${item.Description} ${item.Category}`.toLowerCase().includes(state.searchTerm.toLowerCase());
+    const matchesSearch = `${item.Name} ${item.Description} ${item.Category} ${item.Subcategory || ''}`.toLowerCase().includes(state.searchTerm.toLowerCase());
 
-    let matchesFilters = true;
-    if (state.filters.has('veg') && item.Veg !== 'Yes') matchesFilters = false;
-    if (state.filters.has('nonveg') && item.Veg === 'Yes') matchesFilters = false;
-    if (state.filters.has('available') && item.Available !== 'Yes') matchesFilters = false;
-    if (state.filters.has('popular') && item.Popular !== 'Yes') matchesFilters = false;
-    if (state.filters.has('chef') && item.ChefSpecial !== 'Yes') matchesFilters = false;
+    let matchesDiet = true;
+    if (state.dietFilter === 'veg' && item.Veg !== 'Yes') matchesDiet = false;
+    if (state.dietFilter === 'nonveg' && item.Veg === 'Yes') matchesDiet = false;
 
-    return matchesCategory && matchesSearch && matchesFilters;
+    return matchesCategory && matchesSearch && matchesDiet;
   });
 }
 
@@ -47,6 +44,21 @@ function buildCategoryButtons() {
     .join('');
 }
 
+function resolveImageUrl(rawUrl) {
+  const fallback = './assets/images/hero-bg.svg';
+  if (!rawUrl) return fallback;
+
+  const text = String(rawUrl).trim();
+  if (!text) return fallback;
+
+  const driveMatch = text.match(/drive\.google\.com\/(?:file\/d\/|uc\?id=)([^/&?]+)/i);
+  if (driveMatch) {
+    return `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
+  }
+
+  return text;
+}
+
 function renderMenu() {
   const items = getFilteredItems();
   elements.menuGrid.innerHTML = items
@@ -55,22 +67,21 @@ function renderMenu() {
       const availabilityText = item.Available === 'Yes' ? 'Available' : 'Out of Stock';
       const vegBadge = item.Veg === 'Yes' ? 'Veg' : 'Non-Veg';
       const spiceIndicator = item.Spice || 'Mild';
-      const imageUrl = item.ImageURL || './assets/images/hero-bg.svg';
+      const imageUrl = resolveImageUrl(item.ImageURL);
 
       return `
         <article class="menu-card">
-          <img class="menu-card__image" src="${imageUrl}" alt="${item.Name}" loading="lazy" />
+          <img class="menu-card__image" src="${imageUrl}" alt="${item.Name}" loading="lazy" onerror="this.onerror=null;this.src='./assets/images/hero-bg.svg';" />
           <div class="card-head">
             <h3 class="card-title">${item.Name}</h3>
             <span class="badge">${item.Category}</span>
           </div>
+          ${item.Subcategory ? `<p class="text-muted small mb-2">${item.Subcategory}</p>` : ''}
           <p>${item.Description}</p>
           <div class="badge-row">
             <span class="badge">${vegBadge}</span>
             <span class="badge">${spiceIndicator}</span>
             <span class="badge ${availabilityClass}">${availabilityText}</span>
-            ${item.Popular === 'Yes' ? '<span class="badge">Popular</span>' : ''}
-            ${item.ChefSpecial === 'Yes' ? '<span class="badge">Chef’s Special</span>' : ''}
           </div>
           <div class="price-row">
             <span>⏱ ${item.PrepTime || '10 min'}</span>
@@ -96,9 +107,12 @@ function bindEvents() {
   elements.filterChips.addEventListener('click', (event) => {
     const button = event.target.closest('[data-filter]');
     if (!button) return;
-    const filter = button.dataset.filter;
-    button.classList.toggle('active');
-    if (state.filters.has(filter)) state.filters.delete(filter); else state.filters.add(filter);
+
+    const buttons = Array.from(elements.filterChips.querySelectorAll('[data-filter]'));
+    buttons.forEach((chip) => chip.classList.remove('active'));
+
+    button.classList.add('active');
+    state.dietFilter = button.dataset.filter;
     renderMenu();
   });
 

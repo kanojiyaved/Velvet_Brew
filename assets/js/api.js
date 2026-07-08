@@ -1,8 +1,8 @@
-const SHEET_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL';
+const MENU_DATA_URL = './assets/data/menu-data.json';
 
 async function fetchMenuData() {
   try {
-    const response = await fetch(SHEET_URL, { cache: 'no-store' });
+    const response = await fetch(MENU_DATA_URL, { cache: 'no-store' });
     if (!response.ok) throw new Error('Failed to load menu');
     const data = await response.json();
     return data;
@@ -11,9 +11,9 @@ async function fetchMenuData() {
     return {
       hero: {
         title: 'Crafted for every craving',
-        description: 'Your menu is currently loading. Please refresh or check your Apps Script deployment.'
+        description: 'Your menu is currently loading. Please refresh or check the Excel data file.'
       },
-      categories: ['Coffee', 'Tea', 'Mocktails', 'Pizza', 'Burger', 'Pasta', 'Sandwich', 'Snacks', 'Desserts'],
+      categories: ['Beverages', 'Snacks'],
       items: []
     };
   }
